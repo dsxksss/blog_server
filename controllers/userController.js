@@ -6,7 +6,6 @@ const userService = new UserService();
 
 router.post('/', async (req, res) => {
     const { name, email, password } = req.body;
-    console.log(req.body);
     const user = await userService.createUser(name, email, password);
     res.json(user);
 });

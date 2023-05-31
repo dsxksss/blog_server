@@ -15,6 +15,14 @@ const commentSchema = new mongoose.Schema({
     }
 });
 
+commentSchema.set('toJSON', {
+    transform: function (doc, ret, options) {
+        ret.createdAt = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
+        delete ret.__v;
+        return ret;
+    }
+});
+
 const Comment = mongoose.model('Comment', commentSchema);
 
 module.exports = Comment;

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -13,6 +12,14 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    }
+});
+
+userSchema.set('toJSON', {
+    transform: function (doc, ret, options) {
+        ret.createdAt = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
+        delete ret.__v;
+        return ret;
     }
 });
 
