@@ -2,17 +2,19 @@ const express = require('express');
 const cors = require('cors');
 const dbInit = require("./db/dbInit");
 const http = require('http');
+const registerControllers = require('./registerControllers');
 const app = express()
 
-dbInit(app)
-http.createServer(app).listen(3001);
-console.log(`启动服务器.......成功`)
+// 初始化数据库
+dbInit()
 
 //数据转换成req.body的JSON
 app.use(express.json());
 //解决跨域问题
 app.use(cors());
 
-app.use('/users', require("./controller/userController"));
-app.use('/bolgs', require("./controller/blogController"));
-app.use('/comments', require("./controller/commentController"));
+// 自动加载controllers文件夹内的控制器
+registerControllers(app)
+
+http.createServer(app).listen(3001);
+console.log(`启动服务器.......成功`)
