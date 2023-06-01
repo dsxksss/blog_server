@@ -1,4 +1,6 @@
 const Comment = require('../models/comment');
+const Blog = require('../models/blog');
+const BlogService = require('./blogService');
 
 class CommentService {
     async createComment(content, author, blog) {
@@ -7,7 +9,10 @@ class CommentService {
             author,
             blog
         });
+        const blogData = await Blog.findById(blog);
         await comment.save();
+        blogData.comments.push(comment.id);
+        await blogData.save();
         return comment;
     }
 

@@ -5,7 +5,7 @@ async function dbInit() {
     mongoose
         //先连接这个数据库表
         //如果没有的话就创建这个表
-        .connect("mongodb://localhost/blog")
+        .connect("mongodb://127.0.0.1/blog")
         .then(() => console.log("连接数据库.......成功"))
         .catch((err) => {
             console.log(`Could not connect to dataBase [ ${err} ] !!!`);
