@@ -16,12 +16,15 @@ const blogSchema = new mongoose.Schema({
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'
-    }]
+    }],
+    createdAt: {
+        type: Date,
+        default: () => new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }),
+    },
 });
 
 blogSchema.set('toJSON', {
     transform: function (doc, ret, options) {
-        ret.createdAt = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })
         delete ret.__v;
         return ret;
     }

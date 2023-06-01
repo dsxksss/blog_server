@@ -13,11 +13,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-}, {
-    timestamps: {
-        createdAt: 'createdAt',
-        currentTime: () => new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }),
+    createdAt: {
+        type: Date,
+        default: () => new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }),
     },
+});
+
+userSchema.set('toJSON', {
+    transform: function (doc, ret, options) {
+        delete ret.__v;
+        return ret;
+    }
 });
 
 const User = mongoose.model('User', userSchema);
