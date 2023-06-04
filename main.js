@@ -1,20 +1,27 @@
 const express = require('express');
 const cors = require('cors');
-const dbInit = require("./db/dbInit");
 const http = require('http');
-const registerControllers = require('./registerControllers');
 const app = express()
+const mongoose = require("mongoose");
 
-// 初始化数据库
-dbInit()
 
-//数据转换成req.body的JSON
+mongoose.connect("mongodb://127.0.0.1/BLOGDATABASE").then(() => console.log("连接数据库")).catch((err) => {
+    console.log(`${err}`);
+    process.exit(1);
+});
+
+
 app.use(express.json());
-//解决跨域问题
 app.use(cors());
 
-// 自动加载controllers文件夹内的控制器
-registerControllers(app)
+const userController = require("./userController")
+const blogController = require("./blogController")
+const commentController = require("./commentController")
+app.use("/user",userController)
+app.use("/blog", blogController)
+app.use("/comment", commentController)
+
 
 http.createServer(app).listen(3001);
-console.log(`启动服务器.......成功`)
+console.log(`启动服务器`)
+console.log("监听http://localhost:3001端口");
