@@ -5,7 +5,7 @@ const app = express()
 const mongoose = require("mongoose");
 
 
-mongoose.connect("mongodb://127.0.0.1/BLOGDATABASE").then(() => console.log("连接数据库")).catch((err) => {
+mongoose.connect("mongodb://127.0.0.1/BLOGDATABASE").then(() => console.log("连接数据库成功")).catch((err) => {
     console.log(`${err}`);
     process.exit(1);
 });
